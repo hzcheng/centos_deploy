@@ -1,0 +1,31 @@
+# docker-compose file to launch a service
+version: '3.3'
+services: 
+  centos_dev:
+    image: hzcheng/centos:dev
+    cap_add:
+      - ALL
+    stdin_open: true
+    tty: true
+    volumes: 
+      # Mount Document
+      - type: bind
+        source: /home/ubuntu/share
+        target: /root/share
+      # Mount host key
+      - type: bind
+        source: /home/ubuntu/.ssh
+        target: /root/.ssh
+        read_only: true
+      # Mount tmux config
+      # - type: bind
+      #   source: /Users/hongze/.tmux.conf
+      #   target: /root/.tmux.conf
+      #   read_only: true
+      # Mount a volume type
+      - type: volume
+        source: centos_dev_vol
+        target: /root/mnt
+  
+volumes: 
+  centos_dev_vol:
